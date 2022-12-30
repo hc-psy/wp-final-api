@@ -1,5 +1,5 @@
 from psych.factory import create_app
-from psych.db import disorders_init
+from psych.db import disorders_init, accounts_init
 
 import os
 import configparser
@@ -15,6 +15,7 @@ if __name__ == "__main__":
 
     with app.app_context():
         disorders_init()
+        accounts_init()
         print("DB connected!")
         print("DB init!")
     

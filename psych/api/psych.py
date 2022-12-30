@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from psych.db import get_disorders, create_account, login_check
+from psych.db import get_disorders, create_account, login_check, get_therapists, update_therapist_info
 
 from flask_cors import CORS
 from psych.api.utils import expect
@@ -11,26 +11,31 @@ psych_api = Blueprint(
 
 CORS(psych_api)
 
+
 @psych_api.route('/disorders/', methods=['GET'])
 def api_get_disorders():
+
     
-    disorder = request.args.get('disorder')
+    disorder = request.get_json(force=True).get('disorder')
     response = get_disorders(disorder_name=disorder)
 
     return jsonify(response)
 
+
 @psych_api.route('/signup/', methods=['POST'])
 def api_post_signup():
-    
-    username = request.args.get('username')
-    password = request.args.get('password')
-    identity = request.args.get('identity')
-    name = request.args.get('name')
-    email = request.args.get('email')
-    
-    if username and password and identity and name and email:
-        is_success = create_account(username=username, 
-                                    password=password, 
+
+
+    username = request.get_json(force=True).get('username')
+    password = request.get_json(force=True).get('password')
+    identity = request.get_json(force=True).get('identity')
+    name = request.get_json(force=True).get('name')
+    email = request.get_json(force=True).get('email')
+
+
+    if username and password and (identity in ['therapist', 'client']) and name and email:
+        is_success = create_account(username=username,
+                                    password=password,
                                     identity=identity,
                                     name=name,
                                     email=email)
@@ -46,17 +51,19 @@ def api_post_signup():
 
     response = {
         'message': message,
-        'code': code 
+        'code': code
     }
 
     return jsonify(response)
 
+
 @psych_api.route('/login/', methods=['POST'])
 def api_post_login():
-    
-    username = request.args.get('username')
-    password = request.args.get('password')
-    
+
+
+    username = request.get_json(force=True).get('username')
+    password = request.get_json(force=True).get('password')
+
     if username and password:
         code = login_check(username=username, password=password)
         if code == 0:
@@ -71,7 +78,45 @@ def api_post_login():
 
     response = {
         'message': message,
-        'code': code 
+        'code': code
+    }
+
+    return jsonify(response)
+
+
+@psych_api.route('/therapists/categories/', methods=['GET'])
+def api_get_therapists():
+
+    category = request.get_json(force=True).get('category')
+    response = get_therapists(category=category)
+
+    return jsonify(response)
+
+
+@psych_api.route('/therapists/info/', methods=['PUT'])
+def api_update_therapist():
+
+    eligible = True
+    for key in request.get_json(force=True).keys():
+        if key not in ['username', 'available_time', 'avatar', 'introduction', 'disorder_categories']:
+            eligible = False
+
+    username = request.get_json(force=True).get('username')
+
+    if not eligible or not username:
+        message = 'PARAM_ERROR'
+        code = 1
+    else:
+        req_body = request.get_json(force=True)
+        code = update_therapist_info(username=username, req_body=req_body)
+        if code == 0:
+            message = 'SUCCESS_UPDATE'
+        elif code == 2:
+            message = 'ACCOUNT_DOESNT_EXIST_OR_NOT_THERAPIST'
+
+    response = {
+        'message': message,
+        'code': code
     }
 
     return jsonify(response)
