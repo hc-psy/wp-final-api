@@ -12,14 +12,13 @@ pip3 install -r requirements.txt
 ```
 
 2. 由於專案會與資料庫[MongoDB Atlas](https://www.mongodb.com/)做連結，請先於ＭongoDB中新建Database（名稱為 `db`）以及Collection名稱為（名稱為 `test`）。
-
 3. 為了與資料庫做連結，請新建本地檔案 `.ini`：
 
 ```bash
 touch .ini
 ```
 
-4. 請編輯 `ini`檔案，請確認要在 `.net/`有 `db`：
+4. 請編輯 `ini`檔案，請確認要在 `.net/`後面有 `db`：
 
 ```
 [PROD]
