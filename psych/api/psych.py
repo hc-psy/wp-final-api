@@ -16,7 +16,7 @@ CORS(psych_api)
 def api_get_disorders():
 
     
-    disorder = request.get_json(force=True).get('disorder')
+    disorder = request.args.get('disorder')
     response = get_disorders(disorder_name=disorder)
 
     return jsonify(response)
@@ -87,7 +87,7 @@ def api_post_login():
 @psych_api.route('/therapists/categories/', methods=['GET'])
 def api_get_therapists():
 
-    category = request.get_json(force=True).get('category')
+    category = request.args.get('category')
     response = get_therapists(category=category)
 
     return jsonify(response)
