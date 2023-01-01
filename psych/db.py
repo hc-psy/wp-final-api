@@ -96,12 +96,12 @@ def login_check(username, password):
     account = db.accounts.find_one({'username': username})
 
     if not account:
-        return 2
+        return 2, '', '', ''
 
     if not flask_bcrypt.check_password_hash(account['password'], password):
-        return 1
+        return 1, '', '', ''
 
-    return 0
+    return 0, account['username'], account['name'], account['identity']
 
 
 def get_therapists(category):
@@ -115,37 +115,114 @@ def get_therapists(category):
     return list(therapists)
 
 
-def update_therapist_info(username, req_body):
+def get_info(username):
+    if username:
+        info = db.accounts.find_one({'username': username}, {
+            '_id': 0, 'password': 0})
+        if info:
+            response = {
+                'info': info,
+                'message': 'SUCCESS_GET',
+                'code': 0
+            }
+        else:
+            response = {
+                'info': {},
+                'message': 'ACCOUNT_DOESNT_EXIST',
+                'code': 1
+            }
+    else:
+        response = {
+            'info': {},
+            'message': 'PARAM_ERROR',
+            'code': 2
+        }
+
+    return response
+
+
+def update_info(username, req_body):
     account = db.accounts.find_one(
-        {'username': username, 'identity': 'therapist'})
+        {'username': username})
 
     if not account:
         return 2
 
     if 'password' in list(req_body.keys()):
-        
-        password_hash = flask_bcrypt.generate_password_hash(req_body['password']).decode('utf-8')
-        
+
+        password_hash = flask_bcrypt.generate_password_hash(
+            req_body['password']).decode('utf-8')
+
         req_body.pop('password', None)
         req_body = {**req_body, 'password': password_hash}
 
-        
-        
     db.accounts.update_one(
-        {'username': username, 'identity': 'therapist'}, {'$set': req_body})
+        {'username': username}, {'$set': req_body})
+
     return 0
+
 
 def find_possible_disorder_therapists(symptoms):
     disorders = db.disorders.find({})
-    
+
     match_num = -1
     target_category = ''
     for i in disorders:
         for j in i['level_2']:
-            current_match_num = len(list(set(symptoms).intersection(set(j['symptoms'])))) / len(j['symptoms'])
+            current_match_num = len(list(set(symptoms).intersection(
+                set(j['symptoms'])))) / len(j['symptoms'])
             if current_match_num >= match_num:
                 match_num = current_match_num
                 target_category = i['level_1_name']
-    
+
     return target_category, list(db.accounts.find({'identity': 'therapist', 'disorder_categories': target_category}, {'_id': 0, 'password': 0, 'identity': 0}))
-                
+
+
+def create_appointment(therapist,
+                       client,
+                       time,
+                       meeting_code,
+                       rating=-1,
+                       comment="",
+                       status='ACTIVE'):
+
+    appointment = db.appointments.find_one(
+        {'therapist': therapist, 'client': client, 'time': time})
+    if appointment:
+        return False
+
+    appointment = {
+        'therapist': therapist,
+        'client': client,
+        'meeting_code': meeting_code,
+        'time': time,
+        'rating': rating,
+        'comment': comment,
+        'status': status
+    }
+
+    db.appointments.insert_one(appointment)
+    return True
+
+
+def get_appointments(req_body):
+
+    appointments = list(db.appointments.find(req_body))
+
+    return appointments
+
+def update_appointment(therapist, client, time, req_body):
+    appointment = db.appointments.find_one(
+        {'therapist': therapist, 'client': client, 'time': time})
+
+    if not appointment:
+        return 2
+
+    if 'status' in list(req_body.keys()):
+        if req_body['status'] not in ['ACTIVE', 'UNCOMMENTED', 'COMMENTED']:
+            return 3
+
+    db.appointments.update_one(
+        {'therapist': therapist, 'client': client, 'time': time}, {'$set': req_body})
+
+    return 0
