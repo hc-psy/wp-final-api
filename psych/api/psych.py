@@ -1,5 +1,10 @@
 from flask import Blueprint, request, jsonify
-from psych.db import get_disorders, create_account, login_check, get_therapists, update_therapist_info
+from psych.db import (get_disorders, 
+                      create_account, 
+                      login_check, 
+                      get_therapists, 
+                      update_therapist_info,
+                      find_possible_disorder_therapists)
 
 from flask_cors import CORS
 from psych.api.utils import expect
@@ -15,7 +20,6 @@ CORS(psych_api)
 @psych_api.route('/disorders/', methods=['GET'])
 def api_get_disorders():
 
-    
     disorder = request.args.get('disorder')
     response = get_disorders(disorder_name=disorder)
 
@@ -25,13 +29,11 @@ def api_get_disorders():
 @psych_api.route('/signup/', methods=['POST'])
 def api_post_signup():
 
-
     username = request.get_json(force=True).get('username')
     password = request.get_json(force=True).get('password')
     identity = request.get_json(force=True).get('identity')
     name = request.get_json(force=True).get('name')
     email = request.get_json(force=True).get('email')
-
 
     if username and password and (identity in ['therapist', 'client']) and name and email:
         is_success = create_account(username=username,
@@ -59,7 +61,6 @@ def api_post_signup():
 
 @psych_api.route('/login/', methods=['POST'])
 def api_post_login():
-
 
     username = request.get_json(force=True).get('username')
     password = request.get_json(force=True).get('password')
@@ -98,7 +99,7 @@ def api_update_therapist():
 
     eligible = True
     for key in request.get_json(force=True).keys():
-        if key not in ['username', 'available_time', 'avatar', 'introduction', 'disorder_categories']:
+        if key not in ['username', 'password', 'available_time', 'avatar', 'introduction', 'disorder_categories', 'experiences', 'email']:
             eligible = False
 
     username = request.get_json(force=True).get('username')
@@ -115,6 +116,29 @@ def api_update_therapist():
             message = 'ACCOUNT_DOESNT_EXIST_OR_NOT_THERAPIST'
 
     response = {
+        'message': message,
+        'code': code
+    }
+
+    return jsonify(response)
+
+@psych_api.route('/search/', methods=['POST'])
+def api_post_search():
+
+    symptoms = request.get_json(force=True).get('symptoms')
+    
+    if not symptoms or not isinstance(symptoms, list):
+        category, therapists = '', []
+        message = 'PARAM_ERROR'
+        code = 1
+    else:
+        category, therapists = find_possible_disorder_therapists(symptoms)
+        message = 'SUCCESS_SEARCH'
+        code = 0
+    
+    response = {
+        'category': category,
+        'therapists': therapists, 
         'message': message,
         'code': code
     }

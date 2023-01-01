@@ -11,15 +11,16 @@ from bson.errors import InvalidId
 
 from psych.data import DISORDERS, ACCOUNTS
 
+
 def get_db():
     """
     Configuration method to return db instance
     """
     db = getattr(g, "_database", None)
-    
+
     if db is None:
         db = g._database = PyMongo(current_app).db
-        
+
     return db
 
 
@@ -33,84 +34,118 @@ def disorders_init():
     db.disorders.delete_many({})
     db.disorders.insert_many(DISORDERS)
 
+
 def accounts_init():
     db.accounts.delete_many({})
     for obj in ACCOUNTS:
         create_account(
-            username=obj['username'], 
-            password=obj['password'], 
-            identity=obj['identity'], 
-            name=obj['name'], 
-            email=obj['email'], 
-            avatar=obj['avatar'], 
-            disorder_categories=obj['disorder_categories'])
-    
+            username=obj['username'],
+            password=obj['password'],
+            identity=obj['identity'],
+            name=obj['name'],
+            email=obj['email'],
+            avatar=obj['avatar'],
+            disorder_categories=obj['disorder_categories'],
+            available_time=obj['available_time'],
+            experiences=obj['experiences'])
+
+
 def get_disorders(disorder_name):
     if disorder_name:
-        return list(db.disorders.find({ 'level_1_name': disorder_name }))
-    
+        return list(db.disorders.find({'level_1_name': disorder_name}))
+
     return list(db.disorders.find({}))
 
-def create_account(username, 
-                   password, 
-                   identity, 
-                   name, 
-                   email, 
-                   avatar='', 
+
+def create_account(username,
+                   password,
+                   identity,
+                   name,
+                   email,
+                   avatar='',
                    disorder_categories=[],
                    introduction='',
-                   available_time=[]):
-    
-    account = db.accounts.find_one({ 'username': username })
+                   available_time=[],
+                   experiences=[]):
+
+    account = db.accounts.find_one({'username': username})
     if account:
         return False
-    
-    password_hash = flask_bcrypt.generate_password_hash(password).decode('utf-8')
-    
+
+    password_hash = flask_bcrypt.generate_password_hash(
+        password).decode('utf-8')
+
     account = {
         'username': username,
         'password': password_hash,
         'identity': identity,
-        'name': name, 
+        'name': name,
         'email': email,
         'avatar': avatar,
         'disorder_categories': disorder_categories,
         'introduction': introduction,
-        'available_time': available_time
+        'available_time': available_time,
+        'experiences': experiences
     }
-    
+
     db.accounts.insert_one(account)
     return True
 
+
 def login_check(username, password):
-    account = db.accounts.find_one({ 'username': username })
-    
+    account = db.accounts.find_one({'username': username})
+
     if not account:
         return 2
-    
+
     if not flask_bcrypt.check_password_hash(account['password'], password):
         return 1
-    
+
     return 0
+
 
 def get_therapists(category):
     if category:
-        therapists = db.accounts.find({ 'identity': 'therapist', 'disorder_categories': category }, { '_id': 0, 'password': 0, 'identity': 0, 'email': 0 })
+        therapists = db.accounts.find({'identity': 'therapist', 'disorder_categories': category}, {
+                                      '_id': 0, 'password': 0, 'identity': 0})
     else:
-        therapists = db.accounts.find({ 'identity': 'therapist' }, { '_id': 0, 'password': 0, 'identity': 0, 'email': 0 })
-    
+        therapists = db.accounts.find({'identity': 'therapist'}, {
+                                      '_id': 0, 'password': 0, 'identity': 0})
+
     return list(therapists)
 
+
 def update_therapist_info(username, req_body):
-    account = db.accounts.find_one({ 'username': username, 'identity': 'therapist' })
-    
+    account = db.accounts.find_one(
+        {'username': username, 'identity': 'therapist'})
+
     if not account:
         return 2
-    
-    db.accounts.update_one({ 'username': username, 'identity': 'therapist' }, { '$set': req_body })
-    return 0
-        
-        
-    
-    
 
+    if 'password' in list(req_body.keys()):
+        
+        password_hash = flask_bcrypt.generate_password_hash(req_body['password']).decode('utf-8')
+        
+        req_body.pop('password', None)
+        req_body = {**req_body, 'password': password_hash}
+
+        
+        
+    db.accounts.update_one(
+        {'username': username, 'identity': 'therapist'}, {'$set': req_body})
+    return 0
+
+def find_possible_disorder_therapists(symptoms):
+    disorders = db.disorders.find({})
+    
+    match_num = -1
+    target_category = ''
+    for i in disorders:
+        for j in i['level_2']:
+            current_match_num = len(list(set(symptoms).intersection(set(j['symptoms'])))) / len(j['symptoms'])
+            if current_match_num >= match_num:
+                match_num = current_match_num
+                target_category = i['level_1_name']
+    
+    return target_category, list(db.accounts.find({'identity': 'therapist', 'disorder_categories': target_category}, {'_id': 0, 'password': 0, 'identity': 0}))
+                

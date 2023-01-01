@@ -342,7 +342,15 @@ ACCOUNTS = [
                                 '飲食',
                                 '發展',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'arnold',
@@ -355,7 +363,15 @@ ACCOUNTS = [
                                 '強迫',
                                 '醒覺',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'keeley',
@@ -370,7 +386,15 @@ ACCOUNTS = [
                                 '成癮',
                                 '發展',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'loui',
@@ -384,7 +408,15 @@ ACCOUNTS = [
                                 '飲食',
                                 '壓力',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'abbie',
@@ -397,7 +429,15 @@ ACCOUNTS = [
                                 '成癮',
                                 '思覺失調',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'caroline',
@@ -413,7 +453,15 @@ ACCOUNTS = [
                                 '強迫',
                                 '憂鬱',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'mark',
@@ -426,7 +474,15 @@ ACCOUNTS = [
                                 '飲食',
                                 '躁鬱',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'lawsa',
@@ -442,7 +498,15 @@ ACCOUNTS = [
                                 '身體',
                                 '思覺失調',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'denise',
@@ -456,7 +520,15 @@ ACCOUNTS = [
                                 '發展',
                                 '壓力',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
     {
         'username': 'anna',
@@ -470,6 +542,14 @@ ACCOUNTS = [
                                 '壓力',
                                 '焦慮',],
         'introduction': '',
-        'available_time': []
+        'available_time': [{
+            'time': '',
+            'free': True
+        }],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
     },
 ]
