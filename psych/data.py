@@ -342,10 +342,7 @@ ACCOUNTS = [
                                 '飲食',
                                 '發展',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -363,10 +360,7 @@ ACCOUNTS = [
                                 '強迫',
                                 '醒覺',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -386,10 +380,7 @@ ACCOUNTS = [
                                 '成癮',
                                 '發展',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -408,10 +399,7 @@ ACCOUNTS = [
                                 '飲食',
                                 '壓力',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -429,10 +417,7 @@ ACCOUNTS = [
                                 '成癮',
                                 '思覺失調',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -453,10 +438,7 @@ ACCOUNTS = [
                                 '強迫',
                                 '憂鬱',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -474,10 +456,7 @@ ACCOUNTS = [
                                 '飲食',
                                 '躁鬱',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -498,10 +477,7 @@ ACCOUNTS = [
                                 '身體',
                                 '思覺失調',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -520,10 +496,7 @@ ACCOUNTS = [
                                 '發展',
                                 '壓力',],
         'introduction': '',
-        'available_time': [{
-            'time': '',
-            'free': True
-        }],
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
@@ -542,10 +515,200 @@ ACCOUNTS = [
                                 '壓力',
                                 '焦慮',],
         'introduction': '',
-        'available_time': [{
+        'available_time': [],
+        'experiences': [{
+            'title': '',
             'time': '',
-            'free': True
-        }],
+            'content': ''
+        }]
+    },
+    {
+        'username': 'liliana',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Liliana Mcintyre',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/45fOMAN.jpg',
+        'disorder_categories': ['思覺失調',
+                                '成癮',
+                                '人格',
+                                '飲食',
+                                '發展',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'tiffany',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Tiffany Russell',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/F9z6klo.jpg',
+        'disorder_categories': ['神經',
+                                '強迫',
+                                '醒覺',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'cecily',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Cecily Lara',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/PTDGLRc.jpg',
+        'disorder_categories': ['憂鬱',
+                                '神經',
+                                '飲食',
+                                '成癮',
+                                '發展',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'roberta',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Roberta Robertson',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/0t8L9eZ.jpg',
+        'disorder_categories': ['身體',
+                                '焦慮',
+                                '飲食',
+                                '壓力',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'macauley',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Macauley Franco',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/3aYhRg4.jpg',
+        'disorder_categories': ['人格',
+                                '成癮',
+                                '思覺失調',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'neoa',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Neoa Winters',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/eOT0h27.jpg',
+        'disorder_categories': ['成癮',
+                                '發展',
+                                '飲食',
+                                '躁鬱',
+                                '強迫',
+                                '憂鬱',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'briana',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Briana Serrano',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/30e42TB.jpg',
+        'disorder_categories': ['身體',
+                                '飲食',
+                                '躁鬱',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'alivia',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Alivia Powers',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/DYNE68Z.jpg',
+        'disorder_categories': ['人格',
+                                '神經',
+                                '飲食',
+                                '憂鬱',
+                                '身體',
+                                '思覺失調',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'juliet',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Juliet White',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/2xjd946.jpg',
+        'disorder_categories': ['醒覺',
+                                '人格',
+                                '發展',
+                                '壓力',],
+        'introduction': '',
+        'available_time': [],
+        'experiences': [{
+            'title': '',
+            'time': '',
+            'content': ''
+        }]
+    },
+    {
+        'username': 'bennie',
+        'password': '123',
+        'identity': 'therapist',
+        'name': 'Bennie Rogers',
+        'email': 'austenpsy@gmail.com',
+        'avatar': 'https://i.imgur.com/AZzK9sN.jpg',
+        'disorder_categories': ['醒覺',
+                                '成癮',
+                                '壓力',
+                                '焦慮',],
+        'introduction': '',
+        'available_time': [],
         'experiences': [{
             'title': '',
             'time': '',
