@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from psych.db import (get_disorders,
                       create_account,
                       login_check,
@@ -8,7 +8,8 @@ from psych.db import (get_disorders,
                       find_possible_disorder_therapists,
                       create_appointment,
                       get_appointments,
-                      update_appointment)
+                      update_appointment,
+                      get_videos)
 
 from flask_cors import CORS
 from psych.api.utils import expect
@@ -254,5 +255,13 @@ def api_post_appointment_put():
         'message': message,
         'code': code
     }
+
+    return jsonify(response)
+
+@psych_api.route('/videos/', methods=['GET'])
+def api_get_videos():
+
+    disorder = request.args.get('disorder')
+    response = get_videos(disorder_name=disorder)
 
     return jsonify(response)

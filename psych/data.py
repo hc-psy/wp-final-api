@@ -716,3 +716,97 @@ ACCOUNTS = [
         }]
     },
 ]
+
+VIDEOS = [
+    {
+        'disorder': '發展',
+        'videos': ['https://www.youtube.com/watch?v=Am-XbS0y0hE',
+                   'https://www.youtube.com/watch?v=8-hxd8oG8A8',
+                   'https://www.youtube.com/watch?v=Gkuy5_G7LzA',
+                   'https://www.youtube.com/watch?v=G7COjy4hpqA']
+    },
+    {
+        'disorder': '思覺失調',
+        'videos': ['https://www.youtube.com/watch?v=kKPzz7IRMSk',
+                   'https://www.youtube.com/watch?v=JI0Bj2t8tyM',
+                   'https://www.youtube.com/watch?v=PURvJV2SMso',
+                   'https://www.youtube.com/watch?v=PrtFMbmoWPQ']
+    },
+    {
+        'disorder': '躁鬱',
+        'videos': ['https://www.youtube.com/watch?v=KSvk8LLBo2g',
+                   'https://www.youtube.com/watch?v=-TOs6cceTlA',
+                   'https://www.youtube.com/watch?v=r6WwIdVhVUg',
+                   'https://www.youtube.com/watch?v=vcCBacPWLrc']
+    },
+    {
+        'disorder': '憂鬱',
+        'videos': ['https://www.youtube.com/watch?v=Fm73eVoi4dw',
+                   'https://www.youtube.com/watch?v=Q967zvmvu14',
+                   'https://www.youtube.com/watch?v=1GFck2nYhqA',
+                   'https://www.youtube.com/watch?v=xrG3ZvNwBRA']
+    },
+    {
+        'disorder': '焦慮',
+        'videos': ['https://www.youtube.com/watch?v=4Z54tHSe310',
+                   'https://www.youtube.com/watch?v=RKP6FugzIAc',
+                   'https://www.youtube.com/watch?v=it7i9F4f8Rc',
+                   'https://www.youtube.com/watch?v=Ya1HfNY7898']
+    },
+    {
+        'disorder': '強迫',
+        'videos': ['https://www.youtube.com/watch?v=C1GELr55p1U',
+                   'https://www.youtube.com/watch?v=R_RUw4WOUYU',
+                   'https://www.youtube.com/watch?v=HehGdRHlhRo',
+                   'https://www.youtube.com/watch?v=7gqzhYE3YUw']
+    },
+    {
+        'disorder': '壓力',
+        'videos': ['https://www.youtube.com/watch?v=b_n9qegR7C4',
+                   'https://www.youtube.com/watch?v=u2tkEk6MgWA',
+                   'https://www.youtube.com/watch?v=q9OTnObqFSQ',
+                   'https://www.youtube.com/watch?v=_GftVsimrpo']
+    },
+    {
+        'disorder': '身體',
+        'videos': ['https://www.youtube.com/watch?v=cxWsGBmlNcg',
+                   'https://www.youtube.com/watch?v=oVO7tZS2ZdI',
+                   'https://www.youtube.com/watch?v=T1LGtBH8CM4',
+                   'https://www.youtube.com/watch?v=exAr_EnycIo']
+    },
+    {
+        'disorder': '飲食',
+        'videos': ['https://www.youtube.com/watch?v=VDSfb5EpLjc',
+                   'https://www.youtube.com/watch?v=-nu5vbmejpE',
+                   'https://www.youtube.com/watch?v=iGEdbncnUhE',
+                   'https://www.youtube.com/watch?v=D9jHlBoAMyU']
+    },
+    {
+        'disorder': '醒覺',
+        'videos': ['https://www.youtube.com/watch?v=VBcEz8bVbL0',
+                   'https://www.youtube.com/watch?v=28fdCrV6EKo',
+                   'https://www.youtube.com/watch?v=U-l4Uns_7ic',
+                   'https://www.youtube.com/watch?v=2axm5PgaDlg']
+    },
+    {
+        'disorder': '成癮',
+        'videos': ['https://www.youtube.com/watch?v=R23KUZvjg4A',
+                   'https://www.youtube.com/watch?v=LhFXw1xmaSM',
+                   'https://www.youtube.com/watch?v=3BggSwGFTvU',
+                   'https://www.youtube.com/watch?v=pqxbQ19Q3o0']
+    },
+    {
+        'disorder': '神經',
+        'videos': ['https://www.youtube.com/watch?v=OdUbo1m8S5w',
+                   'https://www.youtube.com/watch?v=0GC79vcc4J8',
+                   'https://www.youtube.com/watch?v=fmaEql66gB0',
+                   'https://www.youtube.com/watch?v=nLdLfmFzLSo']
+    },
+    {
+        'disorder': '人格',
+        'videos': ['https://www.youtube.com/watch?v=4S6d_vx9G78',
+                   'https://www.youtube.com/watch?v=ImhwIPpPnxY',
+                   'https://www.youtube.com/watch?v=AoiRjvjL9IQ',
+                   'https://www.youtube.com/watch?v=-Xv593jgyJ4']
+    }
+]

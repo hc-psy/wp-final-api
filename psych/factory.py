@@ -1,12 +1,13 @@
 from flask import Flask
 from flask.json import JSONEncoder
 from flask_cors import CORS
-# from flask_bcrypt import Bcrypt
 
 from bson import json_util, ObjectId
-from datetime import datetime, timedelta
+from datetime import datetime
+
 
 from psych.api.psych import psych_api
+
 
 class MongoJsonEncoder(JSONEncoder):
     def default(self, obj):
@@ -18,7 +19,7 @@ class MongoJsonEncoder(JSONEncoder):
 
 
 def create_app():
-    
+
     app = Flask(__name__)
     CORS(app)
     app.json_encoder = MongoJsonEncoder

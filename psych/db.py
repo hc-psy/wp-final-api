@@ -1,15 +1,9 @@
-import bson
-
 from flask import current_app, g
 from werkzeug.local import LocalProxy
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 
-from pymongo.errors import DuplicateKeyError, OperationFailure
-from bson.objectid import ObjectId
-from bson.errors import InvalidId
-
-from psych.data import DISORDERS, ACCOUNTS
+from psych.data import DISORDERS, ACCOUNTS, VIDEOS
 
 
 def get_db():
@@ -35,6 +29,11 @@ def disorders_init():
     db.disorders.insert_many(DISORDERS)
 
 
+def videos_init():
+    db.videos.delete_many({})
+    db.videos.insert_many(VIDEOS)
+
+
 def accounts_init():
     db.accounts.delete_many({})
     for obj in ACCOUNTS:
@@ -55,6 +54,13 @@ def get_disorders(disorder_name):
         return list(db.disorders.find({'level_1_name': disorder_name}))
 
     return list(db.disorders.find({}))
+
+
+def get_videos(disorder_name):
+    if disorder_name:
+        return list(db.videos.find({'disorder': disorder_name}))
+
+    return list(db.videos.find({}))
 
 
 def create_account(username,
@@ -211,6 +217,7 @@ def get_appointments(req_body):
 
     return appointments
 
+
 def update_appointment(therapist, client, time, req_body):
     appointment = db.appointments.find_one(
         {'therapist': therapist, 'client': client, 'time': time})
@@ -226,3 +233,19 @@ def update_appointment(therapist, client, time, req_body):
         {'therapist': therapist, 'client': client, 'time': time}, {'$set': req_body})
 
     return 0
+
+
+def update_status(machine_time):
+    appointments = list(db.appointments.find(
+        {'status': 'ACTIVE', 'time': machine_time}))
+
+    if len(appointments) == 0:
+        return
+
+    body = {
+        'status': 'UNCOMMENTED'
+    }
+
+    db.appointments.update_many(
+        {'status': 'ACTIVE', 'time': machine_time}, {'$set': body})
+    print("SOME DATA UPDATED")
