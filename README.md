@@ -22,7 +22,7 @@ touch .ini
 
 ```
 [PROD]
-DB_URI = mongodb+srv://<username>:<password>@<clustername>.ckekqdn.mongodb.net/db?retryWrites=true&w=majority
+DB_URI = mongodb+srv://<username>:<password>@<clustername>.<yourcode>.mongodb.net/db?retryWrites=true&w=majority
 ```
 
 #### Execution
