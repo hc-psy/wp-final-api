@@ -2,6 +2,7 @@ from flask import current_app, g
 from werkzeug.local import LocalProxy
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
+from flask_mail import Message
 
 from psych.data import DISORDERS, ACCOUNTS, VIDEOS
 
@@ -235,7 +236,7 @@ def update_appointment(therapist, client, time, req_body):
     return 0
 
 
-def update_status(machine_time):
+def update_status(machine_time, mail):
     appointments = list(db.appointments.find(
         {'status': 'ACTIVE', 'time': machine_time}))
 
@@ -249,3 +250,55 @@ def update_status(machine_time):
     db.appointments.update_many(
         {'status': 'ACTIVE', 'time': machine_time}, {'$set': body})
     print("SOME DATA UPDATED")
+
+    with mail.connect() as conn:
+        for obj in appointments:
+            therapist = db.accounts.find_one(
+                {'username': obj['therapist'], 'identity': 'therapist'})
+            client = db.accounts.find_one(
+                {'username': obj['client'], 'identity': 'client'})
+
+            therapist_name = therapist['name']
+            therapist_mail = therapist['email']
+            therapist_subject = f"[BeBetter] {therapist_name}, 您的諮商預約快到囉！"
+
+            client_name = client['name']
+            client_mail = client['email']
+            client_subject = f"[BeBetter] {client_name}, 您的諮商預約快到囉！"
+
+            therapist_txt = f'''
+            親愛的{therapist_name}心理師，您好：
+            <br>
+            <br>
+            您與{client_name}用戶預定於{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時的晤談，將於一小時內開始。特此提醒，謝謝您！
+            <br>
+            <br>
+            祝您有個美好的一天！
+            <br>
+            <br>
+            BeBetter團隊
+            '''
+
+            client_txt = f'''
+            親愛的{client_name}用戶，您好：
+            <br>
+            <br>
+            您與{therapist_name}心理師預定於{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時的晤談，將於一小時內開始。特此提醒，謝謝您！
+            <br>
+            <br>
+            祝您有個美好的一天！
+            <br>
+            <br>
+            BeBetter團隊
+            '''
+
+            msg1 = Message(recipients=[therapist_mail],
+                           html=therapist_txt,
+                           subject=therapist_subject)
+
+            msg2 = Message(recipients=[client_mail],
+                           html=client_txt,
+                           subject=client_subject)
+
+            conn.send(msg1)
+            conn.send(msg2)

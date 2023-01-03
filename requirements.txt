@@ -5,3 +5,4 @@ Flask-Bcrypt
 Flask-Cors
 pandas
 Flask-APScheduler
+Flask-Mail
