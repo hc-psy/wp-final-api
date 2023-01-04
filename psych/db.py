@@ -47,7 +47,8 @@ def accounts_init():
             avatar=obj['avatar'],
             disorder_categories=obj['disorder_categories'],
             available_time=obj['available_time'],
-            experiences=obj['experiences'])
+            experiences=obj['experiences'],
+            introduction=obj['introduction'])
 
 
 def get_disorders(disorder_name):
@@ -241,6 +242,7 @@ def update_status(machine_time, mail):
         {'status': 'ACTIVE', 'time': machine_time}))
 
     if len(appointments) == 0:
+        print("NOTHING UPDATED")
         return
 
     body = {
@@ -249,7 +251,7 @@ def update_status(machine_time, mail):
 
     db.appointments.update_many(
         {'status': 'ACTIVE', 'time': machine_time}, {'$set': body})
-    print("SOME DATA UPDATED")
+    
 
     with mail.connect() as conn:
         for obj in appointments:
@@ -260,34 +262,38 @@ def update_status(machine_time, mail):
 
             therapist_name = therapist['name']
             therapist_mail = therapist['email']
-            therapist_subject = f"[BeBetter] {therapist_name}, 您的諮商預約快到囉！"
+            therapist_subject = f"【BeBetter】 {therapist_name}, 您的諮商預約快到囉！"
 
             client_name = client['name']
             client_mail = client['email']
-            client_subject = f"[BeBetter] {client_name}, 您的諮商預約快到囉！"
+            client_subject = f"【BeBetter】 {client_name}, 您的諮商預約快到囉！"
 
             therapist_txt = f'''
-            親愛的{therapist_name}心理師，您好：
+            親愛的<b>{therapist_name}</b>心理師，您好：
             <br>
             <br>
-            您與{client_name}用戶預定於{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時的晤談，將於一小時內開始。特此提醒，謝謝您！
+            您與<b>{client_name}用戶</b>預定於<b>{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時</b>的晤談，將於<b>一小時</b>內開始。特此提醒，謝謝您！
             <br>
             <br>
             祝您有個美好的一天！
             <br>
+            <br>
+            <img style='height:60px;' src='https://i.imgur.com/88AKnFs.png' />
             <br>
             BeBetter團隊
             '''
 
             client_txt = f'''
-            親愛的{client_name}用戶，您好：
+            親愛的<b>{client_name}</b>用戶，您好：
             <br>
             <br>
-            您與{therapist_name}心理師預定於{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時的晤談，將於一小時內開始。特此提醒，謝謝您！
+            您與<b>{therapist_name}心理師</b>預定於<b>{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時</b>的晤談，將於<b>一小時</b>內開始。特此提醒，謝謝您！
             <br>
             <br>
             祝您有個美好的一天！
             <br>
+            <br>
+            <img style='height:60px;' src='https://i.imgur.com/88AKnFs.png' />
             <br>
             BeBetter團隊
             '''
@@ -302,3 +308,5 @@ def update_status(machine_time, mail):
 
             conn.send(msg1)
             conn.send(msg2)
+            
+    print("SOME DATA UPDATED AND EMAIL SENT")

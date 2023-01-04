@@ -26,8 +26,9 @@ def status_update():
     with scheduler.app.app_context():
         current_time = (datetime.now() + timedelta(hours=1)
                         ).strftime('%Y/%m/%d_%H')
+        print(f"TRY TO UPDATE ACTIVE APPOINMENTS WITH {current_time} ...")
         update_status(machine_time=current_time, mail=mail)
-        print(f"UPDATE ACTIVE APPOINMENTS WITH {current_time}")
+        
 
 
 if __name__ == "__main__":
