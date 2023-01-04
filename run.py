@@ -47,15 +47,18 @@ if __name__ == "__main__":
     scheduler.init_app(app)
     scheduler.start()
 
+    app.config['SENDER_TUPLE_1'] = config['PROD']['MAIL_SENDER']
+    app.config['SENDER_TUPLE_2'] = config['PROD']['MAIL_USERNAME']
+    
     app.config.update(
         # EMAIL SETTINGS
         MAIL_SERVER='smtp.gmail.com',
         MAIL_PORT=465,
         MAIL_USE_SSL=True,
-        MAIL_DEFAULT_SENDER=('BeBetter', 'bebetter.app.tw@gmail.com'),
+        MAIL_DEFAULT_SENDER=(app.config['SENDER_TUPLE_1'], app.config['SENDER_TUPLE_2']),
         MAIL_MAX_EMAILS=10,
-        MAIL_USERNAME='bebetter.app.tw@gmail.com',
-        MAIL_PASSWORD='quljeawrfvcehvne'
+        MAIL_USERNAME=config['PROD']['MAIL_USERNAME'],
+        MAIL_PASSWORD=config['PROD']['MAIL_PASSWORD']
     )
     mail.init_app(app)
     app.run()
