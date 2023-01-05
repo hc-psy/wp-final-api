@@ -55,9 +55,9 @@ python3 run.py
 
 ##### 以下為預約寄信為範例，以在Postman中測試為例：
 
-1. 創建治療師帳戶，請以 `POST` 方法中輸入 `127.0.0.1:5000/api/signup/`，在header中設定 `'Content-Type': 'application/json'`，並在 `body`中選擇 `raw`，輸入：
+1. 創建治療師帳戶，請以 `POST` 方法中輸入 `127.0.0.1:5000/api/signup/`，在header中設定 `'Content-Type': 'application/json'`，並在 `body`中選擇 `raw`，輸入（記得刪除註解）：
 
-```json
+```javascript
 {
     "username": "therapistTA", // your therapist username
     "password": "123", // your password
@@ -67,9 +67,9 @@ python3 run.py
 }
 ```
 
-2. 創建個案帳戶，請以 `POST` 方法中輸入 `127.0.0.1:5000/api/signup/`，在header中設定 `'Content-Type': 'application/json'`，並在 `body`中選擇 `raw`，輸入：
+2. 創建個案帳戶，請以 `POST` 方法中輸入 `127.0.0.1:5000/api/signup/`，在header中設定 `'Content-Type': 'application/json'`，並在 `body`中選擇 `raw`，輸入（記得刪除註解）：
 
-```json
+```javascript
 {
     "username": "clientTA", // your client username
     "password": "123", // your password
@@ -79,9 +79,9 @@ python3 run.py
 }
 ```
 
-3. 創建預約，請以 `POST` 方法中輸入 `127.0.0.1:5000/api/appointments/create/`，在header中設定 `'Content-Type': 'application/json'`，並在 `body`中選擇 `raw`，輸入：
+3. 創建預約，請以 `POST` 方法中輸入 `127.0.0.1:5000/api/appointments/create/`，在header中設定 `'Content-Type': 'application/json'`，並在 `body`中選擇 `raw`，輸入（記得刪除註解）：
 
-```json
+```javascript
 {
     "therapist": "therapistTA", // your therapist username
     "client": "clientTA", // your client username
