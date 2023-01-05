@@ -3,8 +3,10 @@ from werkzeug.local import LocalProxy
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_mail import Message
+import pandas as pd
+import random
 
-from psych.data import DISORDERS, ACCOUNTS, VIDEOS
+from psych.data import DISORDERS, ACCOUNTS, VIDEOS, FAKE_CLIENTS
 
 
 def get_db():
@@ -23,6 +25,61 @@ def get_db():
 db = LocalProxy(get_db)
 
 flask_bcrypt = Bcrypt()
+
+
+def create_fake_account():
+    for obj in FAKE_CLIENTS:
+        create_account(
+            username=obj['username'],
+            password=obj['password'],
+            identity=obj['identity'],
+            name=obj['name'],
+            email=obj['email'],
+            avatar="",
+            disorder_categories="",
+            available_time="",
+            experiences="",
+            introduction="")
+
+
+def create_meeting_code():
+    string = ''
+    for i in range(12):
+        chr_type = random.randint(0, 3)
+        if i == 3 or i == 8:
+            string += '-'
+        elif chr_type == 0:
+            string += chr(random.randint(65, 90))
+        elif chr_type == 1:
+            string += chr(random.randint(97, 122))
+        else:
+            string += str(random.randint(0, 9))
+    return string
+
+
+def create_fake_appointments():
+    db.appointments.delete_many({})
+    appointment_num = 0
+    fake_comments = pd.read_csv("psych/comments.csv", header=None)
+    for i in range(3):
+        print(f"PROCESSING APPOINTMENTS BACTH {i+1} / 3 ...")
+        for thera in ACCOUNTS:
+            thera_username = thera['username']
+            for client in FAKE_CLIENTS:
+                client_username = client['username']
+                rating = random.randint(3, 5)
+                meeting_code = create_meeting_code()
+                date = str(int(appointment_num / 12) + 1).zfill(2)
+                hour = str(8 + appointment_num % 12).zfill(2)
+                time = f'2022/12/{date}_{hour}'
+                create_appointment(thera_username, client_username, time, meeting_code,
+                                   rating, fake_comments.iloc[appointment_num][0], 'COMMENTED')
+                appointment_num += 1
+
+
+def appointments_init():
+    create_fake_account()
+    create_fake_appointments()
 
 
 def disorders_init():
@@ -251,7 +308,6 @@ def update_status(machine_time, mail):
 
     db.appointments.update_many(
         {'status': 'ACTIVE', 'time': machine_time}, {'$set': body})
-    
 
     with mail.connect() as conn:
         for obj in appointments:
@@ -269,31 +325,31 @@ def update_status(machine_time, mail):
             client_subject = f"【BeBetter】 {client_name}, 您的諮商預約快到囉！"
 
             therapist_txt = f'''
-            親愛的<b>{therapist_name}</b>心理師，您好：
+            親愛的<strong>{therapist_name}</strong>心理師，您好：
             <br>
             <br>
-            您與<b>{client_name}用戶</b>預定於<b>{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時</b>的晤談，將於<b>一小時</b>內開始。特此提醒，謝謝您！
+            您與<strong>{client_name}用戶</strong>預定於<strong>{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時</strong>的晤談，將於<strong>一小時</strong>內開始。特此提醒，謝謝您！
             <br>
             <br>
             祝您有個美好的一天！
             <br>
             <br>
-            <img style='height:60px;' src='https://i.imgur.com/88AKnFs.png' />
+            <img style="height:60px;" src="https://i.imgur.com/88AKnFs.png" />
             <br>
             BeBetter團隊
             '''
 
             client_txt = f'''
-            親愛的<b>{client_name}</b>用戶，您好：
+            親愛的<strong>{client_name}</strong>用戶，您好：
             <br>
             <br>
-            您與<b>{therapist_name}心理師</b>預定於<b>{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時</b>的晤談，將於<b>一小時</b>內開始。特此提醒，謝謝您！
+            您與<strong>{therapist_name}心理師</strong>預定於<b>{machine_time.split('_')[0]}日{machine_time.split('_')[1]}時</strong>的晤談，將於<strong>一小時</strong>內開始。特此提醒，謝謝您！
             <br>
             <br>
             祝您有個美好的一天！
             <br>
             <br>
-            <img style='height:60px;' src='https://i.imgur.com/88AKnFs.png' />
+            <img style="height:60px;" src="https://i.imgur.com/88AKnFs.png" />
             <br>
             BeBetter團隊
             '''
@@ -308,5 +364,5 @@ def update_status(machine_time, mail):
 
             conn.send(msg1)
             conn.send(msg2)
-            
+
     print("SOME DATA UPDATED AND EMAIL SENT")

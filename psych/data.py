@@ -730,3 +730,41 @@ VIDEOS = [
                    'https://www.youtube.com/watch?v=-Xv593jgyJ4']
     }
 ]
+
+FAKE_CLIENTS = [
+    {
+        'username': 'tahlia',
+        'password': '123',
+        'identity': 'client',
+        'name': '何慧茹',
+        'email': 'austenpsy@gmail.com',
+    },
+    {
+        'username': 'caitlin',
+        'password': '123',
+        'identity': 'client',
+        'name': '李姿俐',
+        'email': 'austenpsy@gmail.com',
+    },
+    {
+        'username': 'ameera',
+        'password': '123',
+        'identity': 'client',
+        'name': '藍玉鳳',
+        'email': 'austenpsy@gmail.com',
+    },
+    {
+        'username': 'mitchell',
+        'password': '123',
+        'identity': 'client',
+        'name': '張政哲',
+        'email': 'austenpsy@gmail.com',
+    },
+    {
+        'username': 'douglas',
+        'password': '123',
+        'identity': 'client',
+        'name': '袁兆瑋',
+        'email': 'austenpsy@gmail.com',
+    },
+]
