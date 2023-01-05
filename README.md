@@ -35,7 +35,7 @@ MAIL_PASSWORD = <16-digits-passwords>
 
 設定這三個參數的方法有三種：
 
-* 已經寄給助教信箱（eewebprogramming@googlegroups.com）：請收信件，信件名稱 `[G15] backend ini`。
+* 已經寄給助教信箱（eewebprogramming@googlegroups.com）：請收信件，信件名稱 `[G15] backend ini`，請將信件中的 `.txt`檔案內文字附加進入您的 `.ini`中。
 * 像專案開發者索取：請寄信至austenpsy@gmail.com索取。
 * 請依照[此網站](https://github.com/twtrubiks/Flask-Mail-example)的步驟設定寄件者參數資訊。
 
